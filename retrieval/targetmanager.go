@@ -502,6 +502,9 @@ func (tm *TargetManager) targetsFromGroup(tg *config.TargetGroup, cfg *config.Sc
 		if labels == nil {
 			continue
 		}
+		if strings.Contains(string(labels[model.AddressLabel]), "/") {
+			return nil, fmt.Errorf("%q is not a valid hostname", labels[model.AddressLabel])
+		}
 
 		for ln := range labels {
 			// Meta labels are deleted after relabelling. Other internal labels propagate to
